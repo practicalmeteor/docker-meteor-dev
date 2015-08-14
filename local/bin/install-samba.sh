@@ -22,14 +22,19 @@ fi
 
 set -x
 
-apt-get update
 apt-get -y install samba
 # So we can redirect output as root
 /bin/bash -c "sed s/developervm/$SMB_NETBIOS_NAME/ /smb.conf > /etc/samba/smb.conf"
 restart smbd
 restart nmbd
 
-/bin/bash echo -e "$SMB_PASSWD\$SMB_PASSWD\n" | smbpasswd -a -s
+#/bin/bash echo -e "$SMB_PASSWD\$SMB_PASSWD\n" | smbpasswd -a -s
+smbpasswd -s -a vagrant <<EOF
+$SMB_PASSWD
+$SMB_PASSWD
+EOF
+
+
 
 mkdir -p /repos
 
