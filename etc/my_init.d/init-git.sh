@@ -1,23 +1,26 @@
 #!/bin/bash -e
 
-help="Usage:\n\$0 '<git user.name>' <git user.email>"
-
-if [ -n "$1" ]
+if [ -z ${GIT_USER_NAME+x} ] || [ -z ${GIT_USER_EMAIL+x} ];
 then
-    echo "git user.name: $1"
-    GIT_USER_NAME=$1
-else
-    echo -e $help
-    exit 1
-fi
+    help="Usage:\n\$0 '<git user.name>' <git user.email>"
 
-if [ -n "$2" ]
-then
-    echo "git user.email: $2"
-    GIT_USER_EMAIL=$2
-else
-    echo -e $help
-    exit 1
+    if [ -n "$1" ]
+    then
+        echo "git user.name: $1"
+        GIT_USER_NAME=$1
+    else
+        echo -e $help
+        exit 1
+    fi
+
+    if [ -n "$2" ]
+    then
+        echo "git user.email: $2"
+        GIT_USER_EMAIL=$2
+    else
+        echo -e $help
+        exit 1
+    fi
 fi
 
 set -x
