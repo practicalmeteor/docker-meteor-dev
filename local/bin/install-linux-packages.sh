@@ -13,5 +13,5 @@ echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.
 #apt-get update -o Dir::Etc::sourcelist="mongodb-org-3.0.list"
 
 apt-get update
-apt-get -y install vim wget curl git tree ntp fontconfig zip jq default-jre \
-    mongodb-org-shell mongodb-org-tools samba
+apt-get -y install wget git tree ntp fontconfig zip jq default-jre \
+    mongodb-org-shell mongodb-org-tools
