@@ -27,15 +27,15 @@ set -x
 
 # Git configuration
 
-git config --replace-all --global user.name "$GIT_USER_NAME"
-git config --replace-all --global user.email $GIT_USER_EMAIL
+exec /sbin/setuser dev git config --replace-all --global user.name "$GIT_USER_NAME"
+exec /sbin/setuser dev git config --replace-all --global user.email $GIT_USER_EMAIL
 
 # Disable GitHub SSH host key checking
 
-mkdir -p ~/.ssh
-echo -e 'Host github.com\n\tStrictHostKeyChecking no\n\tLogLevel ERROR\n' >> ~/.ssh/config
+exec /sbin/setuser dev mkdir -p ~/.ssh
+exec /sbin/setuser dev echo -e 'Host github.com\n\tStrictHostKeyChecking no\n\tLogLevel ERROR\n' >> ~/.ssh/config
 
 # Create your github ssh key
-ssh-keygen -t rsa -C $GIT_USER_EMAIL -f ~/.ssh/id_rsa -N ''
+exec /sbin/setuser dev ssh-keygen -t rsa -C $GIT_USER_EMAIL -f ~/.ssh/id_rsa -N ''
 echo -e "Copy your public ssh key and add it to your github account to enable password-less communication with github. Do it at:\nhttps://github.com/settings/ssh\n"
-cat ~/.ssh/id_rsa.pub
+exec /sbin/setuser dev cat ~/.ssh/id_rsa.pub

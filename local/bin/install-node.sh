@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | /bin/bash \
+/sbin/setuser dev curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | /bin/bash \
     && source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
