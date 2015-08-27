@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ -z ${DEVELOPER+x} ];
 then
     echo "Missing DEVELOPER env var"
