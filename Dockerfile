@@ -28,4 +28,5 @@ VOLUME /home/dev/repos
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER dev
+RUN /local/bin/init-bashrc.sh
 WORKDIR /home/dev/
