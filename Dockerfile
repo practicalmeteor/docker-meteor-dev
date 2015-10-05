@@ -1,31 +1,37 @@
-FROM practicalmeteor/ngrok2:0.0.1
+FROM phusion/passenger-nodejs:0.9.17
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
+ADD ./add/usr/local/bin/upgrade-linux.sh /usr/local/bin/
+RUN /usr/local/bin/upgrade-linux.sh
 
-ADD ./local/bin /local/bin
-ADD ./etc/my_init.d /etc/my_init.d
-RUN chmod +x /etc/my_init.d/*
+ADD ./add/usr/local/bin/install-linux-packages.sh /usr/local/bin/
+RUN /usr/local/bin/install-linux-packages.sh
 
-RUN groupadd -r dev && useradd -rm -g dev dev
+ADD ./add/usr/local/bin/install-node.sh /usr/local/bin/
+RUN /usr/local/bin/install-node.sh
 
-ENV HOME /home/dev
-ENV NVM_DIR $HOME/.nvm
-ENV NODE_VERSION 0.10.36
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
+ADD ./add/usr/local/bin/install-npm-packages.sh /usr/local/bin/
+RUN /usr/local/bin/install-npm-packages.sh
 
-RUN /local/bin/install-linux-packages.sh
-RUN /local/bin/install-node.sh
-RUN /local/bin/install-npm-packages.sh
-RUN /local/bin/install-meteor.sh
+ADD ./add/usr/local/bin/add-meteor-user.sh /usr/local/bin/
+RUN /usr/local/bin/add-meteor-user.sh
 
-VOLUME /home/dev/repos
+ENV TERM xterm
 
+ADD ./add/usr/local/bin/install-meteor.sh /usr/local/bin/
+RUN /usr/local/bin/install-meteor.sh
+
+ADD ./add/usr/local/bin/install-meteor-distribution.sh /usr/local/bin/
+RUN /usr/local/bin/install-meteor-distribution.sh
+
+ADD ./add/etc/my_init.d/init-bashrc.sh /etc/my_init.d/
+
+# To fix the "WARNING: terminal is not fully functional" message
+ENV NODE_VERSION 0.10.40
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-USER dev
-WORKDIR /home/dev/
+EXPOSE 3000 3100

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo docker run -d --net=host -v ~/repos/:/home/dev/repos --name $1 -e GIT_USER_NAME=$2 -e GIT_USER_EMAIL=$3 -e DEVELOPER=$4 -i -t practicalmeteor/meteor-dev bash
+docker run -d -p 3000:3000 -p 3100:3100 -v $1:/home/meteor/repos --name dev -e METEOR_ENV=$2 practicalmeteor/meteor-dev:1.2.0.2
